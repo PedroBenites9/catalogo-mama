@@ -14,7 +14,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Colocá acá el número de WhatsApp con código de país (ej: 54911xxxxxxxx)
-  const [whatsappNumber] = useState('5491123344940');
+  const [whatsappNumber] = useState('5491149723465');
 
   const {
     cart,
