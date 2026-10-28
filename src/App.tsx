@@ -14,7 +14,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Colocá acá el número de WhatsApp con código de país (ej: 54911xxxxxxxx)
-  const [whatsappNumber] = useState('5491112345678');
+  const [whatsappNumber] = useState('5491123344940');
 
   const {
     cart,
@@ -59,8 +59,8 @@ export default function App() {
                 key={tab.id}
                 onClick={() => setCategory(tab.id as CategoryFilter)}
                 className={`whitespace-nowrap px-3 py-1.5 text-xs tracking-wider uppercase transition-all cursor-pointer ${category === tab.id
-                    ? 'border-b-2 border-stone-900 font-semibold text-stone-900'
-                    : 'text-stone-400 hover:text-stone-700'
+                  ? 'border-b-2 border-stone-900 font-semibold text-stone-900'
+                  : 'text-stone-400 hover:text-stone-700'
                   }`}
               >
                 {tab.label}
