@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { PRODUCTS, type Product } from './data/products';
-import { useCart } from '../src/hooks/useCart';
+import { useCart } from './hooks/useCart';
 import { Header } from './components/Header';
 import { ProductCard } from './components/ProductCard';
 import { ProductModal } from './components/ProductModal';
@@ -13,9 +13,8 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Configuración del número de WhatsApp (código de país + número, sin signos ni espacios)
-  // Ej. para Argentina: 54911xxxxxxxx
-  const [whatsappNumber] = useState('5491149723465');
+  // Colocá acá el número de WhatsApp con código de país (ej: 54911xxxxxxxx)
+  const [whatsappNumber] = useState('5491112345678');
 
   const {
     cart,
@@ -23,7 +22,7 @@ export default function App() {
     updateQuantity,
     removeFromCart,
     totalItems,
-    totalPrice
+    totalPrice,
   } = useCart();
 
   const filteredProducts = PRODUCTS.filter((item) =>
@@ -31,40 +30,37 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-stone-900 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#FAF9F6] text-stone-900 flex flex-col justify-between selection:bg-stone-200">
       <div>
-        {/* Barra de Navegación y Banner */}
-        <Header
-          totalItems={totalItems}
-          onOpenCart={() => setIsCartOpen(true)}
-        />
+        {/* Barra superior y bolsa */}
+        <Header totalItems={totalItems} onOpenCart={() => setIsCartOpen(true)} />
 
-        {/* Sección Hero Editorial */}
-        <section className="px-6 pt-16 pb-12 text-center max-w-3xl mx-auto">
-          <span className="text-[11px] font-semibold tracking-[0.25em] uppercase text-stone-400">
-            Catálogo Exclusivo
+        {/* Hero */}
+        <section className="px-4 sm:px-6 pt-8 sm:pt-14 pb-6 sm:pb-10 text-center max-w-3xl mx-auto">
+          <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-400">
+            Catálogo Online
           </span>
-          <h2 className="mt-3 font-serif text-4xl sm:text-5xl font-light text-stone-900 leading-tight">
+          <h2 className="mt-2 font-serif text-2xl sm:text-4xl sm:leading-tight font-light text-stone-900">
             Bienestar diario y fragancias con personalidad.
           </h2>
-          <p className="mt-4 text-xs sm:text-sm text-stone-500 font-light leading-relaxed max-w-xl mx-auto">
-            Nutrición celular avanzada en prácticos sticks solubles de FuXion y la colección de inspiraciones olfativas de alta duración de Millanel.
+          <p className="mt-2.5 text-xs sm:text-sm text-stone-500 font-light max-w-md mx-auto">
+            Nutrición celular FuXion y la colección de inspiraciones olfativas Millanel.
           </p>
 
-          {/* Filtros por Categoría */}
-          <div className="mt-10 flex flex-wrap justify-center gap-3 sm:gap-6 border-b border-stone-200 pb-4">
+          {/* Filtros Swipeables en mobile */}
+          <div className="mt-6 sm:mt-8 flex items-center justify-start sm:justify-center gap-2 sm:gap-6 overflow-x-auto pb-2 scrollbar-none border-b border-stone-200">
             {[
-              { id: 'all', label: 'Todos los productos' },
-              { id: 'fuxion', label: 'Bebidas FuXion' },
-              { id: 'perfumes', label: 'Perfumería Millanel' },
+              { id: 'all', label: 'Todos' },
+              { id: 'fuxion', label: 'FuXion Sticks' },
+              { id: 'perfumes', label: 'Perfumería' },
               { id: 'cosmetica', label: 'Cosmética' },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setCategory(tab.id as CategoryFilter)}
-                className={`text-xs tracking-widest uppercase pb-2 transition-all cursor-pointer ${category === tab.id
-                  ? 'border-b-2 border-stone-900 font-semibold text-stone-900'
-                  : 'text-stone-400 hover:text-stone-700'
+                className={`whitespace-nowrap px-3 py-1.5 text-xs tracking-wider uppercase transition-all cursor-pointer ${category === tab.id
+                    ? 'border-b-2 border-stone-900 font-semibold text-stone-900'
+                    : 'text-stone-400 hover:text-stone-700'
                   }`}
               >
                 {tab.label}
@@ -73,14 +69,14 @@ export default function App() {
           </div>
         </section>
 
-        {/* Catálogo de Productos (Grid Box Model) */}
-        <main className="max-w-6xl mx-auto px-6 pb-20">
+        {/* Grid de Productos: 2 columnas en móvil, 3 en pantallas grandes */}
+        <main className="max-w-6xl mx-auto px-3 sm:px-6 pb-20">
           {filteredProducts.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-sm text-stone-400">No hay productos en esta categoría por el momento.</p>
+            <div className="text-center py-16">
+              <p className="text-xs sm:text-sm text-stone-400">No hay productos en esta categoría.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-6">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -97,16 +93,15 @@ export default function App() {
         </main>
       </div>
 
-      {/* Footer sobrio */}
-      <footer className="border-t border-stone-200 py-10 px-6 bg-white text-center text-xs text-stone-400 space-y-2">
-        <p className="tracking-widest uppercase text-[10px] text-stone-500">
-          AURA & ESENCIA · BIENESTAR & PERFUMERÍA
+      {/* Footer */}
+      <footer className="border-t border-stone-200 py-8 px-4 bg-white text-center text-stone-400 space-y-1.5">
+        <p className="tracking-widest uppercase text-[10px] text-stone-500 font-medium">
+          AURA & ESENCIA
         </p>
-        <p>Las marcas registradas de fragancias se citan únicamente a modo de referencia olfativa.</p>
-        <p className="text-[10px]">Coordinación de pedidos y envíos mediante atención directa.</p>
+        <p className="text-[11px]">Las fragancias son inspiraciones olfativas de referencia.</p>
       </footer>
 
-      {/* Modal de Detalle */}
+      {/* Bottom Sheet / Modal */}
       <ProductModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
@@ -116,7 +111,7 @@ export default function App() {
         }}
       />
 
-      {/* Carrito Desplegable */}
+      {/* Carrito */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
