@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Product } from '../data/Products';
+import type { Product } from '../data/products';
 
 interface Props {
     product: Product;
@@ -23,7 +23,7 @@ export const ProductCard: React.FC<Props> = ({ product, onOpenModal, onAddToCart
                 />
                 {product.badges && product.badges.length > 0 && (
                     <div className="absolute top-3 left-3 flex flex-wrap gap-1">
-                        {product.badges.map((b) => (
+                        {product.badges.map((b: string) => (
                             <span
                                 key={b}
                                 className="bg-white/95 backdrop-blur-sm px-2 py-0.5 text-[10px] tracking-widest uppercase font-medium text-stone-800 shadow-xs"

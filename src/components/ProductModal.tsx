@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Product } from '../data/Products';
+import type { Product } from '../data/products';
 
 interface Props {
     product: Product | null;
